@@ -1,3 +1,9 @@
+/*input
+3
+(a+(b*c))
+((a+b)*(z+x))
+((a+t)*((b+(a+c))^(c+d)))
+*/
 #include <iostream>
 #include <string>
 using namespace std;
@@ -8,7 +14,6 @@ string solve(string s) {
 		return s;
 	}
 
-	//cout << "Solving " << s << endl;
 	string firstOperand;
 	string secondOperand;
 	string operateur;
