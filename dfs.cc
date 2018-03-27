@@ -28,6 +28,7 @@ void dfsVisit(vector< vector<int> > adj, int i);
 
 int time = 0;
 vector<vertex> vertices;
+vector<int> topologicalSort;
 
 int main(int argc, char const *argv[])
 {
@@ -51,13 +52,17 @@ int main(int argc, char const *argv[])
 	}
 
 	// printf("Starting the forest\n");
-	printf("Topological sort: ");
 	for (int i = 0; i < V; ++i)
 	{
 		if (vertices[i].color == 0) {
 			// printf("\tStarting tree from root %d\n", i+1);
 			dfsVisit(adj, i);
 		}
+	}
+	printf("Topological sort: ");
+	for (int i = 0; i < topologicalSort.size(); ++i)
+	{
+		printf("%d ", topologicalSort[i]);
 	}
 	return 0;
 }
@@ -84,7 +89,7 @@ void dfsVisit(vector< vector<int> > adj, int i) {
 	u->color = 2;
 	u->f = time;
 
-	printf("%d ", i+1); 
+	topologicalSort.insert(topologicalSort.begin(), u->id);
 	// printf(")");
 	// printf("\t\tFinish exploration time = %d\n", u->f);
 }
