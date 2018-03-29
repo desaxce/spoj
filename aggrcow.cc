@@ -1,11 +1,18 @@
 /*input
-1
+2
 5 3
 1
 2
 8
 4
 9
+6 4
+1
+11
+21
+22
+40
+41
 */
 #include <iostream>
 #include <vector>
@@ -19,6 +26,20 @@ void display(vector<int> x) {
 		printf("%d, ", x[i]);
 	}
 	printf("\n");
+}
+
+bool isDistanceAcceptable(int C, int d, vector<int> stalls) {
+	int lastCowStall = stalls[0];
+	C = C-1;
+	int i = 1;
+	while (i < stalls.size() and C != 0) {
+		if (stalls[i] - lastCowStall >= d) {
+			C = C-1;
+			lastCowStall = stalls[i];
+		}
+		i++;
+	}
+	return C==0;
 }
 
 int main(int argc, char const *argv[])
@@ -40,29 +61,23 @@ int main(int argc, char const *argv[])
 			x.pb(temp);
 		}
 
-		vector<int> distBetweenBoxes;
-
-		// display(x);
-
 		sort(x.begin(), x.end());
-		// display(x);
 
-		for (int j = 0; j < N-1; j++) {
-			distBetweenBoxes.pb(x[j+1]-x[j]+1);
+		int a = 1;
+		int b = x[x.size()-1];
+
+		int m = (b-a)/2;
+
+		while (a != m) {
+			if (isDistanceAcceptable(C, m, x)) {
+				a = m;
+			} else {
+				b = m;
+			}
+			m = a+(b-a)/2;
 		}
 
-		// display(distBetweenBoxes);
-		sort(distBetweenBoxes.begin(), distBetweenBoxes.end());
-		// display(distBetweenBoxes);
-		reverse(distBetweenBoxes.begin(), distBetweenBoxes.end());
-		display(distBetweenBoxes);
-
-		// We get distBetweenBoxes = [5, 3, 2, 2]
-		// The first index (0) allows for the placing of two cows (distance 5)
-		// The second index (1) allows for the placing of 1 additional cow, etc
-		// Hence the index we're looking for is C-2
-		// (1 because array is 0-based, 1 because the first index allows the placing of two cows)
-		printf("%d\n", distBetweenBoxes[C-2]);
+		printf("%d\n", a);		
 
 	}
 	return 0;
