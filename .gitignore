@@ -1,3 +1,13 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
 spoj.sublime-project
 spoj.sublime-workspace
+
 *.exe
