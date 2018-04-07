@@ -1,16 +1,9 @@
 /*input
-11
-1 CS
-2 CS
-1 SS
-6 SCCSSC
-2 CC
-3 CSCSS
-1024 CCCCCCCCCCS
-1023 CCCCCCCCCCS
-512 CCCCCCCCCCS
-511 CCCCCCCCCCS
-1 CCCCCCCCCCS
+2
+5
+5 6 8 4 3
+3
+8 9 7
 */
 #include<bits/stdc++.h>
 
@@ -29,6 +22,7 @@
 #define count_ones 					__builtin_popcountl
 
 using namespace std;
+
 
 typedef long long ll;
 typedef pair<int, int> ii;
@@ -65,50 +59,50 @@ int getNum() {
 #endif
 }
 
-string P;
 int T;
-
-int damage() {
-	int f = 1;
-	int res = 0;
-	forall(i, 0, Size(P)) {
-		if (P[i]=='S') {
-			res += f;
-		} else {
-			f = (f << 1);
-		}
-	}
-	return res;
-}
 
 void solveCase(int c) {
 	printf("Case #%d: ", c+1);
+	int N = getNum();
 
-	int D = getNum();
-	// P = getLine();
-	cin >> P;
-	// watch(P);
+	vector<int> even((N+1)/2);
+	vector<int> odd(N/2);
 
-	int ss = int(count(P.begin(), P.end(), 'S'));
-	if (ss > D) {
-		printf("IMPOSSIBLE\n");
-	} else {
-		int h = 0;
-		int d = damage();
-		// watch(d);
-		while (d > D) {
-			int i = int(P.rfind("CS")); // We cannot have noend since we checked for IMPOSSIBLE cases
-			P[i] = 'S'; P[i+1] = 'C';
-			int j = int(count(P.begin(), P.begin() + i, 'C'));
-			d -= (1 << j);
-			h++;
-		}
-		printf("%d", h);
-		if (c != T-1) {
-			printf("\n");
+	// Would scanf be too slow for 10^5 elements?
+	forall(i, 0, N) {
+		if (i%2 == 0) {
+			even[i/2] = getNum();
+		} else {
+			odd[i/2] = getNum();
 		}
 	}
+
+	sort(even.begin(), even.end());
+	sort(odd.begin(), odd.end());
+
+	vector<int> V(N);
+	forall(i, 0, (N+1)/2) {
+		V[2*i] = even[i];
+	}
+	forall(i, 0, N/2) {
+		V[2*i+1] = odd[i];
+	}
+
+	forall(i, 0, N-1) {
+		if (V[i] > V[i+1]) {
+			printf("%d", i);
+			if (c != T-1) {
+				printf("\n");
+			}
+			return;
+		}
+	}
+	printf("OK");
+	if (c != T-1) {
+		printf("\n");
+	}
 }
+
 
 int main(int argc, char const *argv[])
 {
@@ -117,5 +111,20 @@ int main(int argc, char const *argv[])
 	forall(i, 0, T) {
 		solveCase(i);
 	}
+
+	// srand(time(NULL));
+	// printf("100\n");
+	// forall(j, 0, 100) {
+	// 	int N = rand()%10 + 1;
+	// 	printf("%d\n", N);
+	// 	forall(i, 0, N) {
+	// 		printf("%d", (rand()%100)+1);
+	// 		if (i != N-1) {
+	// 			printf(" ");
+	// 		} else {
+	// 			printf("\n");
+	// 		}
+	// 	}
+	// }
 	return 0;
 }
