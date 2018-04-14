@@ -55,13 +55,19 @@ int getNum() {
 #endif
 }
 
+int T;
+
 void solveCase(int i) {
 	printf("Case #%d:", i+1);
+
+	if (i != T-1) {
+		printf("\n");
+	}
 }
 
 int main(int argc, char const *argv[])
 {
-	int T = getNum();
+	T = getNum();
 
 	forall(i, 0, T) {
 		solveCase(i);
