@@ -88,7 +88,7 @@ void solveCase(int i) {
 	int delta = P - 2*N*(r.W+r.H);
 	double finalValue = 0;
 
-	int wh = r.W;
+	int wh = 2*r.W;
 
 	if (delta < wh) {
 		finalValue =  max(finalValue, 1.0*P-delta);
@@ -103,7 +103,7 @@ void solveCase(int i) {
 			finalValue = max(finalValue, maxValue+2.*N*(r.W+r.H));
 		}
 	}
-	wh = r.H;
+	wh = 2*r.H;
 
 	if (delta < wh) {
 		finalValue =  max(finalValue, 1.0*P-delta);
